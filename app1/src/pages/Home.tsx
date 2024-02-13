@@ -1,5 +1,5 @@
-import React, {FC, useEffect} from 'react';
-import {Provider, useDispatch, useSelector} from 'react-redux';
+import React, {FC} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 const HomeContent = () => {
     const dispatch = useDispatch();
@@ -29,12 +29,7 @@ const app1Reducer = (state: any = initialState, action: { type: any; payload: an
 };
 
 const Home: FC<any> = (props) => {
-    useEffect(() => {
-        props.store.injectReducer('app1', app1Reducer);
-    }, [props.store]);
-    return <Provider store={props.store}>
-        <HomeContent />
-    </Provider>
+    return <HomeContent />
 };
 
 export default Home;

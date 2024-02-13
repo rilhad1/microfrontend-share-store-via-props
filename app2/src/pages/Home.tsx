@@ -1,8 +1,5 @@
-import React, {FC, useEffect} from "react";
-import {Provider, useDispatch} from "react-redux";
-
-// @ts-ignore
-// const Store = React.lazy(() => import('host/store'));
+import React, {FC} from "react";
+import {useDispatch} from "react-redux";
 
 const HomeContent = () => {
     const dispatch = useDispatch();
@@ -22,20 +19,7 @@ const HomeContent = () => {
     );
 }
 const Home: FC<any> = (props) => {
-    // return <Store>
-    //     {(store: any) => {
-    //         console.log('store', store)
-    //         return (
-    //             <Provider store={store}>
-    //                 <HomeContent />
-    //             </Provider>
-    //         )
-    //     }}
-    // </Store>
-    //
-    return <Provider store={props.store}>
-        <HomeContent />
-    </Provider>
+    return <HomeContent />
 };
 
 export default Home;

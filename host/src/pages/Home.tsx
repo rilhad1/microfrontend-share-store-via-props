@@ -13,20 +13,15 @@ const Home = () => {
         // @ts-ignore
         return state.host;
     })
-    const handleClick = () => {
-        dispatch({type: 'SET_DEFAULT'})
-    }
-    const changeApp1Title = () => {
-        dispatch({type: 'SET_APP1_TITLE', payload: 'App1 title changed from HOST app'})
-    }
+
   return (
     <div style={{backgroundColor: '#cccccc'}}>
       <header>
           <h1>{title}</h1>
           <h2>{subtitle}</h2>
       </header>
-        <button onClick={handleClick}>Set default titles</button>
-        <button onClick={changeApp1Title}>Change app 1 title</button>
+        {/*<button onClick={handleClick}>Set default titles</button>*/}
+        {/*<button onClick={changeApp1Title}>Change app 1 title</button>*/}
         <div style={{padding: '20px', marginTop: '30px', backgroundColor: '#bbb'}}>
         <Suspense fallback="Loading RemoteApp1...">
             <RemoteApp1 store={store} />
