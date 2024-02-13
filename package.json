@@ -1,0 +1,26 @@
+{
+  "name": "ts-monorepo",
+  "version": "1.0.0",
+  "description": "This example demos a basic host/remote application with TypeScript and also streams types.",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "yarn run build_app1 && yarn run build_app2 && yarn run build_host",
+    "serve": "yarn run serve_app1 && yarn run serve_app2 && yarn run serve_host --parallel",
+    "clean": "yarn run clean_app1 && yarn run clean_app2 && yarn run clean_host",
+    "serve_app1": "pnpm run --filter ./app1 serve",
+    "serve_app2": "pnpm run --filter ./app2 serve",
+    "serve_host": "pnpm run --filter ./host serve",
+    "build_app1": "pnpm run --filter ./app1 build",
+    "build_app2": "pnpm run --filter ./app2 build",
+    "build_host": "pnpm run --filter ./host build",
+
+    "clean_app1": "pnpm run --filter ./app1 clean",
+    "clean_app2": "pnpm run --filter ./app2 clean",
+    "clean_host": "pnpm run --filter ./host clean"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "wsrun": "^5.2.4"
+  }
+}
