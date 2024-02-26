@@ -1,61 +1,43 @@
-import {combineReducers, compose, configureStore} from '@reduxjs/toolkit'
-import {ExtendedStore} from "../@types";
-import {UnknownAction} from "redux";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-// import { combineReducers, createStore, compose } from 'redux';
-//
-const initialState = {
-    title: 'DEFAULT HOST APP TITLE',
-    subtitle: 'Default host APP sub title',
-};
+import { hostReducer } from "./reducers";
 
-const hostReducer = (state = initialState, action: UnknownAction) => {
-    switch (action.type) {
-        case 'SET_DEFAULT': return initialState;
-        case 'SET_TITLE': return {...state, title: action.payload}
-        case 'SET_SUB_TITLE': return {...state, subtitle: action.payload}
-        default:
-            return state;
+const createCrossMfMiddleware = (channelName: string) => {
+  const broadcastChannel = new BroadcastChannel(channelName);
+
+  return (store: any) => (next: (ac: any) => any) => (action: any) => {
+    if (action.skipBroadcast) return next(action);
+    if (["SET_APP_1_TITLE", "SET_APP_2_TITLE"].includes(action.type)) {
+      broadcastChannel.postMessage(action);
     }
+
+    return next(action);
+  };
 };
 
-const staticReducers = {
+export const store = configureStore({
+  reducer: combineReducers({
     host: hostReducer,
+  }),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(
+      createCrossMfMiddleware("HOST_APP_CHANEL"),
+      createCrossMfMiddleware("APP_1_CHANEL"),
+      createCrossMfMiddleware("APP_2_CHANEL"),
+    ),
+});
+
+const broadcastApp1Channel = new BroadcastChannel("APP_1_CHANEL");
+const broadcastApp2Channel = new BroadcastChannel("APP_2_CHANEL");
+broadcastApp1Channel.onmessage = (event) => {
+  // We assume that the SET_SUB_TITLE should not be propagated again to avoid loops
+  if (event.data.type === "SET_SUB_TITLE") {
+    store.dispatch({ ...event.data, skipBroadcast: true });
+  }
 };
-
-/**
- * Cf. redux docs:
- * https://redux.js.org/recipes/code-splitting/#defining-an-injectreducer-function
- */
-
-
-export default function configureAppStore(initialState = {}) {
-    const composeEnhancers =
-        typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-            ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-            : compose;
-
-    const store = configureStore({
-        reducer: createReducer(),
-        // enhancers: composeEnhancers()
-    }) as ExtendedStore;
-
-    store.asyncReducers = {};
-
-    store.injectReducer = (key, asyncReducer) => {
-        store.asyncReducers[key] = asyncReducer;
-        store.replaceReducer(createReducer(store.asyncReducers));
-    };
-
-    return store;
-
-}
-
-function createReducer(asyncReducers = {}) {
-    return combineReducers({
-        ...staticReducers,
-        ...asyncReducers,
-    });
-}
-
-export const store = configureAppStore();
+broadcastApp2Channel.onmessage = (event) => {
+  // We assume that the SET_SUB_TITLE should not be propagated again to avoid loops
+  if (event.data.type === "SET_SUB_TITLE") {
+    store.dispatch({ ...event.data, skipBroadcast: true });
+  }
+};

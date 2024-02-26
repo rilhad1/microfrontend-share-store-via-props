@@ -1,31 +1,36 @@
-const dependencies = require('../package.json').dependencies;
+const dependencies = require("../package.json").dependencies;
 module.exports = {
-  name: 'app1',
-  filename: 'remoteEntry.js',
+  name: "app1",
+  filename: "remoteEntry.js",
   exposes: {
-    './App1Home': './src/pages/Home',
+    "./App1Home": "./src/pages/Home",
+    "./App1": "./src/App",
   },
   shared: {
     // ...dependencies,
-    '@reduxjs/toolkit': {
+    "@reduxjs/toolkit": {
       singleton: true,
-      requiredVersion: dependencies['react'],
+      requiredVersion: dependencies["@reduxjs/toolkit"],
     },
-    'react-redux': {
+    "react-redux": {
       singleton: true,
-      requiredVersion: dependencies['react'],
+      requiredVersion: dependencies["react-redux"],
     },
     redux: {
       singleton: true,
-      requiredVersion: dependencies['react'],
+      requiredVersion: dependencies["redux"],
     },
     react: {
       singleton: true,
-      requiredVersion: dependencies['react'],
+      requiredVersion: dependencies["react"],
     },
-    'react-dom': {
+    "react-dom": {
       singleton: true,
-      requiredVersion: dependencies['react-dom'],
+      requiredVersion: dependencies["react-dom"],
+    },
+    "redux-micro-frontend": {
+      singleton: true,
+      requiredVersion: dependencies["redux-micro-frontend"],
     },
   },
 };

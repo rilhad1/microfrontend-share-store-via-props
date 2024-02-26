@@ -14,7 +14,6 @@
     "build_app1": "pnpm run --filter ./app1 build",
     "build_app2": "pnpm run --filter ./app2 build",
     "build_host": "pnpm run --filter ./host build",
-
     "clean_app1": "pnpm run --filter ./app1 clean",
     "clean_app2": "pnpm run --filter ./app2 clean",
     "clean_host": "pnpm run --filter ./host clean"

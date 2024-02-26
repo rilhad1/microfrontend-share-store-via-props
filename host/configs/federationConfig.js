@@ -1,9 +1,9 @@
-const dependencies = require('../package.json').dependencies;
+const dependencies = require("../package.json").dependencies;
 
-const federationConfig = ({APP1, APP2}) => {
+const federationConfig = ({ APP1, APP2 }) => {
   return {
-    name: 'Host',
-    filename: 'remoteEntry.js',
+    name: "Host",
+    filename: "remoteEntry.js",
 
     remotes: {
       app1: `app1@${APP1}/remoteEntry.js`,
@@ -11,25 +11,29 @@ const federationConfig = ({APP1, APP2}) => {
     },
     shared: {
       // ...dependencies,
-      '@reduxjs/toolkit': {
+      "@reduxjs/toolkit": {
         singleton: true,
-        requiredVersion: dependencies['react'],
+        requiredVersion: dependencies["@reduxjs/toolkit"],
       },
-      'react-redux': {
+      "react-redux": {
         singleton: true,
-        requiredVersion: dependencies['react'],
+        requiredVersion: dependencies["react-redux"],
       },
       redux: {
         singleton: true,
-        requiredVersion: dependencies['react'],
+        requiredVersion: dependencies["redux"],
       },
       react: {
         singleton: true,
-        requiredVersion: dependencies['react'],
+        requiredVersion: dependencies["react"],
       },
-      'react-dom': {
+      "react-dom": {
         singleton: true,
-        requiredVersion: dependencies['react-dom'],
+        requiredVersion: dependencies["react-dom"],
+      },
+      "redux-micro-frontend": {
+        singleton: true,
+        requiredVersion: dependencies["redux-micro-frontend"],
       },
     },
   };

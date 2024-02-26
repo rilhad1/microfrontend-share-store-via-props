@@ -1,25 +1,37 @@
-import React, {FC} from "react";
-import {useDispatch} from "react-redux";
+import React, { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomeContent = () => {
-    const dispatch = useDispatch();
-    const changeHandler = () => {
-        dispatch({type: 'SET_SUB_TITLE', payload: 'FROM APP 2'})
-    }
-    const changeApp1Title = () => {
-        dispatch({type: 'SET_APP1_TITLE', payload: 'App1 title changed from HOST app'})
-    }
-    return (
-        <div style={{backgroundColor: '#4CB2BF', padding: '10px'}}>
-            <h1> App-2 --- Home page</h1>
-            <button onClick={changeHandler}>Change subTitle</button>
-            <button onClick={changeApp1Title}>Change app 1 title</button>
+  const dispatch = useDispatch();
+  const changeHostSubtitle = () => {
+    dispatch({ type: "SET_SUB_TITLE", payload: "From - Second APP" });
+  };
+  const title = useSelector((state) => {
+    // @ts-ignore
+    return state.app2.title;
+  });
 
-        </div>
-    );
-}
-const Home: FC<any> = (props) => {
-    return <HomeContent />
+  const changeApp1Title = () => {
+    dispatch({
+      type: "SET_APP_1_TITLE",
+      payload: "App1 title changed from APP2 app",
+    });
+  };
+
+  const setDefaultTitle = () => {
+    dispatch({ type: "SET_DEFAULT_APP_2" });
+  };
+  return (
+    <div style={{ backgroundColor: "#4CB2BF", padding: "10px" }}>
+      <h1> App-2 --- {title}</h1>
+      <button onClick={setDefaultTitle}>Set DEFAULT</button>
+      <button onClick={changeHostSubtitle}>Change HOST subTitle</button>
+      <button onClick={changeApp1Title}>Change APP_1 title</button>
+    </div>
+  );
+};
+const Home: FC<any> = () => {
+  return <HomeContent />;
 };
 
 export default Home;
