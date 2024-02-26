@@ -6,6 +6,9 @@ module.exports = {
     "./App2Home": "./src/pages/Home",
     "./App2": "./src/App",
   },
+  remotes: {
+    storeApp: `storeApp@http://localhost:3030/remoteEntry.js`,
+  },
   shared: {
     // ...dependencies,
     "@reduxjs/toolkit": {

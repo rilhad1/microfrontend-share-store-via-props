@@ -1,6 +1,6 @@
 const dependencies = require("../package.json").dependencies;
 
-const federationConfig = ({ APP1, APP2 }) => {
+const federationConfig = ({ APP1, APP2, STORE }) => {
   return {
     name: "Host",
     filename: "remoteEntry.js",
@@ -8,6 +8,7 @@ const federationConfig = ({ APP1, APP2 }) => {
     remotes: {
       app1: `app1@${APP1}/remoteEntry.js`,
       app2: `app2@${APP2}/remoteEntry.js`,
+      storeApp: `storeApp@${STORE}/remoteEntry.js`,
     },
     shared: {
       // ...dependencies,

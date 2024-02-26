@@ -1,13 +1,9 @@
 const dependencies = require("../package.json").dependencies;
 module.exports = {
-  name: "app1",
+  name: "storeApp",
   filename: "remoteEntry.js",
   exposes: {
-    "./App1Home": "./src/pages/Home",
-    "./App1": "./src/App",
-  },
-  remotes: {
-    storeApp: `storeApp@http://localhost:3030/remoteEntry.js`,
+    "./store": "./src/store",
   },
   shared: {
     // ...dependencies,
